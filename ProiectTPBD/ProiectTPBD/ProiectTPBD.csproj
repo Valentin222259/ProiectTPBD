@@ -87,6 +87,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DBHelper.cs" />
+    <Compile Include="FormActualizare.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormActualizare.Designer.cs">
+      <DependentUpon>FormActualizare.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormAdaugare.cs">
       <SubType>Form</SubType>
     </Compile>
