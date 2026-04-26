@@ -105,6 +105,12 @@
     <Compile Include="FormPrincipal.Designer.cs">
       <DependentUpon>FormPrincipal.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormStergere.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormStergere.Designer.cs">
+      <DependentUpon>FormStergere.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FormPrincipal.resx">
