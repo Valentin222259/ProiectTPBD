@@ -25,6 +25,7 @@ namespace ProiectTPBD
             ToolStripMenuItem introducereDate = new ToolStripMenuItem("INTRODUCERE DATE");
             ToolStripMenuItem actualizare = new ToolStripMenuItem("Actualizare date");
             ToolStripMenuItem adaugare = new ToolStripMenuItem("Adaugare angajati");
+            adaugare.Click += (s, e) => new FormAdaugare().ShowDialog();
             ToolStripMenuItem stergere = new ToolStripMenuItem("Stergere angajati");
             ToolStripMenuItem calcul = new ToolStripMenuItem("Calcul salarii");
             introducereDate.DropDownItems.AddRange(new ToolStripItem[] { actualizare, adaugare, stergere, calcul });
