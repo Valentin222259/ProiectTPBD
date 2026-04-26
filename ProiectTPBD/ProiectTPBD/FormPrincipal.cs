@@ -40,7 +40,7 @@ namespace ProiectTPBD
 
             // MODIF_PROCENTE
             ToolStripMenuItem modifProcente = new ToolStripMenuItem("MODIF_PROCENTE");
-            modifProcente.Click += (s, e) => MessageBox.Show("Functie in dezvoltare", "Info");
+            modifProcente.Click += (s, e) => new FormModifProcente().ShowDialog();
 
             // IESIRE
             ToolStripMenuItem iesire = new ToolStripMenuItem("IESIRE");
