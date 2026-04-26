@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ProiectTPBD
@@ -15,6 +8,13 @@ namespace ProiectTPBD
         public Form1()
         {
             InitializeComponent();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            if (DBHelper.TestConnection())
+                MessageBox.Show("Conexiune Oracle reusita!", "Succes",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }
