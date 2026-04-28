@@ -118,24 +118,35 @@ namespace ProiectTPBD
                 using (var con = DBHelper.GetConnection())
                 {
                     con.Open();
-                    string sql = @"INSERT INTO ANGAJATI (NUME, PRENUME, FUNCTIE, SALAR_BAZA, SPOR_PROC, PREMII_BRUTE, RETINERI, TOTAL_BRUT, BRUT_IMPOZABIL, CAS, CASS, IMPOZIT, VIRAT_CARD)
-                        VALUES (:nume, :prenume, :functie, :salar, :spor, :premii, :retineri, :totalbrut, :brutimpozabil, :cas, :cass, :impozit, :viratcard)";
-                    var cmd = new OracleCommand(sql, con);
-                    cmd.Parameters.Add("nume", txtNume.Text);
-                    cmd.Parameters.Add("prenume", txtPrenume.Text);
-                    cmd.Parameters.Add("functie", txtFunctie.Text);
-                    cmd.Parameters.Add("salar", int.Parse(txtSalarBaza.Text));
-                    cmd.Parameters.Add("spor", double.Parse(txtSpor.Text));
-                    cmd.Parameters.Add("premii", int.Parse(txtPremii.Text));
-                    cmd.Parameters.Add("retineri", int.Parse(txtRetineri.Text));
-                    cmd.Parameters.Add("totalbrut", int.Parse(lblTotalBrut.Text));
-                    cmd.Parameters.Add("brutimpozabil", int.Parse(lblBrutImpozabil.Text));
-                    cmd.Parameters.Add("cas", int.Parse(lblCas.Text));
-                    cmd.Parameters.Add("cass", int.Parse(lblCass.Text));
-                    cmd.Parameters.Add("impozit", int.Parse(lblImpozit.Text));
-                    cmd.Parameters.Add("viratcard", int.Parse(lblViratCard.Text));
-                    cmd.ExecuteNonQuery();
-                    MessageBox.Show("Angajat adaugat cu succes!", "Succes", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    OracleTransaction tranzactie = con.BeginTransaction();
+                    try
+                    {
+                        string sql = @"INSERT INTO ANGAJATI (NUME, PRENUME, FUNCTIE, SALAR_BAZA, SPOR_PROC, PREMII_BRUTE, RETINERI, TOTAL_BRUT, BRUT_IMPOZABIL, CAS, CASS, IMPOZIT, VIRAT_CARD)
+            VALUES (:nume, :prenume, :functie, :salar, :spor, :premii, :retineri, :totalbrut, :brutimpozabil, :cas, :cass, :impozit, :viratcard)";
+                        var cmd = new OracleCommand(sql, con);
+                        cmd.Transaction = tranzactie;
+                        cmd.Parameters.Add("nume", txtNume.Text);
+                        cmd.Parameters.Add("prenume", txtPrenume.Text);
+                        cmd.Parameters.Add("functie", txtFunctie.Text);
+                        cmd.Parameters.Add("salar", int.Parse(txtSalarBaza.Text));
+                        cmd.Parameters.Add("spor", double.Parse(txtSpor.Text));
+                        cmd.Parameters.Add("premii", int.Parse(txtPremii.Text));
+                        cmd.Parameters.Add("retineri", int.Parse(txtRetineri.Text));
+                        cmd.Parameters.Add("totalbrut", int.Parse(lblTotalBrut.Text));
+                        cmd.Parameters.Add("brutimpozabil", int.Parse(lblBrutImpozabil.Text));
+                        cmd.Parameters.Add("cas", int.Parse(lblCas.Text));
+                        cmd.Parameters.Add("cass", int.Parse(lblCass.Text));
+                        cmd.Parameters.Add("impozit", int.Parse(lblImpozit.Text));
+                        cmd.Parameters.Add("viratcard", int.Parse(lblViratCard.Text));
+                        cmd.ExecuteNonQuery();
+                        tranzactie.Commit();
+                        MessageBox.Show("Angajat adaugat cu succes!", "Succes", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    catch (Exception ex)
+                    {
+                        tranzactie.Rollback();
+                        MessageBox.Show("Eroare: " + ex.Message, "Eroare", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
             }
             catch (Exception ex)

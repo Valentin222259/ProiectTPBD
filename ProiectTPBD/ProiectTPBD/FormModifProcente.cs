@@ -135,6 +135,28 @@ namespace ProiectTPBD
                         cmd.Parameters.Add("parola", txtParolaNoua.Text.Trim());
 
                     cmd.ExecuteNonQuery();
+                    // Recalculare salarii pentru toti angajatii
+                    var cmdRecalc = new OracleCommand(@"UPDATE ANGAJATI SET
+                    TOTAL_BRUT = ROUND(SALAR_BAZA*(1+SPOR_PROC/100)+PREMII_BRUTE),
+                    CAS = ROUND(ROUND(SALAR_BAZA*(1+SPOR_PROC/100)+PREMII_BRUTE) * :cas/100),
+                    CASS = ROUND(ROUND(SALAR_BAZA*(1+SPOR_PROC/100)+PREMII_BRUTE) * :cass/100),
+                    BRUT_IMPOZABIL = ROUND(SALAR_BAZA*(1+SPOR_PROC/100)+PREMII_BRUTE) - ROUND(ROUND(SALAR_BAZA*(1+SPOR_PROC/100)+PREMII_BRUTE)*:cas2/100) - ROUND(ROUND(SALAR_BAZA*(1+SPOR_PROC/100)+PREMII_BRUTE)*:cass2/100),
+                    IMPOZIT = ROUND((ROUND(SALAR_BAZA*(1+SPOR_PROC/100)+PREMII_BRUTE) - ROUND(ROUND(SALAR_BAZA*(1+SPOR_PROC/100)+PREMII_BRUTE)*:cas3/100) - ROUND(ROUND(SALAR_BAZA*(1+SPOR_PROC/100)+PREMII_BRUTE)*:cass3/100)) * :impozit/100),
+                    VIRAT_CARD = ROUND(SALAR_BAZA*(1+SPOR_PROC/100)+PREMII_BRUTE) - ROUND(ROUND(SALAR_BAZA*(1+SPOR_PROC/100)+PREMII_BRUTE)*:cas4/100) - ROUND(ROUND(SALAR_BAZA*(1+SPOR_PROC/100)+PREMII_BRUTE)*:cass4/100) - ROUND((ROUND(SALAR_BAZA*(1+SPOR_PROC/100)+PREMII_BRUTE) - ROUND(ROUND(SALAR_BAZA*(1+SPOR_PROC/100)+PREMII_BRUTE)*:cas5/100) - ROUND(ROUND(SALAR_BAZA*(1+SPOR_PROC/100)+PREMII_BRUTE)*:cass5/100))*:impozit2/100) - RETINERI", con);
+
+                    cmdRecalc.Parameters.Add("cas", cas);
+                    cmdRecalc.Parameters.Add("cass", cass);
+                    cmdRecalc.Parameters.Add("cas2", cas);
+                    cmdRecalc.Parameters.Add("cass2", cass);
+                    cmdRecalc.Parameters.Add("cas3", cas);
+                    cmdRecalc.Parameters.Add("cass3", cass);
+                    cmdRecalc.Parameters.Add("impozit", impozit);
+                    cmdRecalc.Parameters.Add("cas4", cas);
+                    cmdRecalc.Parameters.Add("cass4", cass);
+                    cmdRecalc.Parameters.Add("cas5", cas);
+                    cmdRecalc.Parameters.Add("cass5", cass);
+                    cmdRecalc.Parameters.Add("impozit2", impozit);
+                    cmdRecalc.ExecuteNonQuery();
                     MessageBox.Show("Procente salvate cu succes!\nRecalculati salariile din meniu.", "Succes", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     this.Close();
                 }

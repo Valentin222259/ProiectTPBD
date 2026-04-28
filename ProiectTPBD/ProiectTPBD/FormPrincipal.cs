@@ -49,6 +49,36 @@ namespace ProiectTPBD
             menuStrip.Items.AddRange(new ToolStripItem[] { ajutor, introducereDate, tiparire, modifProcente, iesire });
             this.MainMenuStrip = menuStrip;
             this.Controls.Add(menuStrip);
+            // Panel cu butoane calde
+            Panel panelButoane = new Panel()
+            {
+                Location = new System.Drawing.Point(0, 24),
+                Size = new System.Drawing.Size(800, 35),
+                BackColor = System.Drawing.Color.LightGray
+            };
+
+            Button btnAdaugare = new Button() { Text = "➕ Adaugare", Location = new System.Drawing.Point(5, 5), Width = 100, Height = 25 };
+            Button btnActualizare = new Button() { Text = "✏️ Actualizare", Location = new System.Drawing.Point(110, 5), Width = 110, Height = 25 };
+            Button btnStergere = new Button() { Text = "❌ Stergere", Location = new System.Drawing.Point(225, 5), Width = 100, Height = 25 };
+            Button btnProcente = new Button() { Text = "⚙️ Procente", Location = new System.Drawing.Point(330, 5), Width = 100, Height = 25 };
+            Button btnIesire = new Button() { Text = "🚪 Iesire", Location = new System.Drawing.Point(435, 5), Width = 90, Height = 25 };
+
+            // Tooltips
+            ToolTip tooltip = new ToolTip();
+            tooltip.SetToolTip(btnAdaugare, "Adaugare angajat nou");
+            tooltip.SetToolTip(btnActualizare, "Actualizare date angajati");
+            tooltip.SetToolTip(btnStergere, "Stergere angajat");
+            tooltip.SetToolTip(btnProcente, "Modificare procente CAS/CASS/Impozit");
+            tooltip.SetToolTip(btnIesire, "Parasire aplicatie");
+
+            btnAdaugare.Click += (s, e) => new FormAdaugare().ShowDialog();
+            btnActualizare.Click += (s, e) => new FormActualizare().ShowDialog();
+            btnStergere.Click += (s, e) => new FormStergere().ShowDialog();
+            btnProcente.Click += (s, e) => new FormModifProcente().ShowDialog();
+            btnIesire.Click += (s, e) => Application.Exit();
+
+            panelButoane.Controls.AddRange(new Control[] { btnAdaugare, btnActualizare, btnStergere, btnProcente, btnIesire });
+            this.Controls.Add(panelButoane);
         }
 
         private void FormPrincipal_Load(object sender, EventArgs e)
